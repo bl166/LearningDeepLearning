@@ -122,6 +122,46 @@ def dropout(x, kp, name):
     return h_fc1_drop
 
 
+
+# --------------------------------------------------
+# visualiza activations hist
+
+def vis_activations_hist(samples, axis = None, title_str = "", xname = True):
+    
+    samples = samples.flatten()
+    if axis is not None:
+        xlabel = axis.set_xlabel
+        ylabel = axis.set_ylabel
+        title = axis.set_title
+        grid = axis.grid
+        xlim = axis.set_xlim
+        ylim = axis.set_ylim
+        hist = axis.hist
+    else:
+        xlabel = plt.xlabel
+        ylabel = plt.ylabel
+        title = plt.title
+        grid = plt.grid
+        xlim = plt.xlim
+        ylim = plt.ylim
+        hist = plt.hist
+            
+#     weights = np.ones_like(samples)/len(samples)
+#     n, bins, patches = hist(samples, 200, density=0, facecolor='green', alpha=0.75, weights=weights)
+    n, bins, patches = hist(samples, 200)
+
+    if xname:
+        xlabel('Activation values')
+    ylabel('Value counts')
+    title(title_str)
+    xlim(np.min(samples),np.max(samples))
+#     ylim(np.min(n),1)#np.max(n))
+    grid(True)
+
+    if axis is None:
+        plt.show()
+
+
 if __name__=="__main__":
     ntrain = 1000 # per class
     ntest = 100 # per class
